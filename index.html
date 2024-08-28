@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .musicWrapper{
+            display: flex;
+        }
+        .musicWrapper > button {
+            margin-right: 16px;
+        }
+        .musicTitle{
+            font-weight: bold;
+            font-size: large;
+        }
+    </style>
+</head>
+<script src="bingo.js"></script>
+<body>
+    <h1>Hei</h1>
+    <input type="text" id="musicInp"><button onclick="addSong()">Submit</button>
+    <br>
+    <button onclick="exportList()">Export list</button>
+    <br><br>
+    <textarea id="bigList" cols="25" rows="10"></textarea>
+    <br>
+    <button onclick="convertBigList()">Submit</button>
+    <br><br>
+    <div id="musicListContainer">
+
+    </div>
+    <br>
+    <button id="shuffleBtn" onclick="shuffleList()">Shuffle</button>
+</body>
+</html>
