@@ -5,7 +5,7 @@
     gap: 50px;
     margin: 0 75px;
     align-items: flex-start;
-
+  min-height: 70vh;
 }
 #inputWrapper {
   max-width: 50%;

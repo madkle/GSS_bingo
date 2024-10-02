@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "../style/inputStyle.css";
+import BeerForm from "./frontLabelForm.js";
+
 function InputLists() {
   const [songlist, setSonglist] = useState([]);
 
@@ -82,6 +84,7 @@ function InputLists() {
           <br />
         </div>
         <button onClick={shuffleList}>Scramble Songs</button>
+        <BeerForm />
       </section>
     </div>
   );
