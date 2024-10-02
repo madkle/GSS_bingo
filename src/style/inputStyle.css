@@ -1,0 +1,32 @@
+/*General styling*/
+#inputContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    margin: 0 75px;
+    align-items: flex-start;
+
+}
+#inputWrapper {
+  max-width: 50%;
+  min-width: 33%;
+  padding: 0 14px;
+}
+/*Music list*/
+#musicContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 50%;
+  padding: 0 14px;
+}
+.musicWrapper {
+  display: flex;
+}
+.musicWrapper > button {
+  margin-right: 16px;
+}
+.musicTitle {
+  font-weight: bold;
+  font-size: large;
+}
