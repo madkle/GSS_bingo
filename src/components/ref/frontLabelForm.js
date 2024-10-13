@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { PDFFile, CreateSingleFrontLabel } from "./frontLabelMaker";
+import { PDFFile, CreateSingleFrontLabel } from "../frontLabelMaker";
 
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 

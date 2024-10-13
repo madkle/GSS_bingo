@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { authorizeUrl } from "./spotifyAuth";
-function SpotifyShit() {
-  const CLIENT_ID = "da23bdf5b4334272a1dc8e48abb73409";
-  const CLIENT_SECRET = "cfc99605c4324f83a2e5759931e707ec";
-  const REDIRECT_URI = "http://localhost:3000";
+import {
+  authorizeUrl,
+  REDIRECT_URI,
+  CLIENT_ID,
+  CLIENT_SECRET,
+} from "./spotifyAuth";
+import "../style/bodyStyle.css";
 
+export function SpotifyShit({songs, setSongs, shuffleList}) {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
-  const [songs, setSongs] = useState([]);
   const [playlistLink, setPlaylistLink] = useState("");
   const code = new URLSearchParams(window.location.search).get("code");
   // Component to display each song with a remove button
@@ -23,6 +25,7 @@ function SpotifyShit() {
       </div>
     );
   };
+  
   useEffect(() => {
     if (code && !token) {
       fetch("https://accounts.spotify.com/api/token", {
@@ -31,7 +34,9 @@ function SpotifyShit() {
           "Content-Type": "application/x-www-form-urlencoded",
           Authorization: `Basic ${btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)}`,
         },
-        body: `grant_type=authorization_code&code=${encodeURIComponent(code)}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`,
+        body: `grant_type=authorization_code&code=${encodeURIComponent(
+          code
+        )}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`,
       })
         .then((response) => response.json())
         .then((data) => {
@@ -57,8 +62,11 @@ function SpotifyShit() {
     }
   };
 
+  
+
+
   return (
-    <div>
+    <section id="musicContainer">
       {token ? (
         <>
           <h2>Playlist Songs</h2>
@@ -69,6 +77,8 @@ function SpotifyShit() {
             onChange={(e) => setPlaylistLink(e.target.value)}
           />
           <button onClick={handleFetchPlaylist}>Fetch Playlist</button>
+          <br />
+          <button onClick={shuffleList}>Scramble Songs</button>
           <ul>
             {songs.map((song, i) => (
               <DisplaySongList key={"song" + i} songName={song} index={i} />
@@ -78,8 +88,6 @@ function SpotifyShit() {
       ) : (
         <a href={authorizeUrl}>Login to Spotify</a>
       )}
-    </div>
+    </section>
   );
 }
-
-export default SpotifyShit;
