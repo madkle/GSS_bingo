@@ -10,27 +10,15 @@ const BeerForm = () => {
   const beerTypeInput = useRef("");
   const brewersInput = useRef("");
 
-  const fileB64 = useRef("");
-  const handleFileInput = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-
-      reader.onload = (readEvent) => {
-        fileB64.current = readEvent.target.result;
-      };
-
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
       const frontLabelInfo = {
-        beerName: beerNameInput.current.value,
-        beerType: beerTypeInput.current.value,
-        brewers: brewersInput.current.value,
-        file: fileB64.current,
+        beerName: "Dummy",
+        beerType: "Øl",
+        brewers: "0237",
+        file: "",
       };
 
       setDownloadLink(
@@ -108,9 +96,6 @@ const BeerForm = () => {
               placeholder="brewers"
               ref={brewersInput}
             />
-            <br></br>
-            <label htmlFor="inpArt">label art </label>
-            <input id="inpArt" type="file" onChange={handleFileInput} />
             <br></br>
             <button type="submit">Generate PDF</button>
           </form>

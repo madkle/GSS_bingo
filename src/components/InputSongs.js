@@ -1,25 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../style/inputStyle.css";
-import BeerForm from "./frontLabelForm.js";
-
+import { PDFDocument, CreateSingleFrontLabel } from "./frontLabelMaker";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 function InputLists() {
-  const [songlist, setSonglist] = useState([]);
+  const [songlist, setSonglist] = useState([
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+    22, 23, 24, 25,
+  ]);
 
-  // Component to display each song with a remove button
-  const DisplaySongList = ({ songName, index }) => {
-    const removeSong = () => {
-      // Update the songlist immutably by filtering out the removed song
-      setSonglist((prevList) => prevList.filter((_, i) => i !== index));
-    };
-
-    return (
-      <div className="musicWrapper">
-        <button onClick={removeSong}>Remove Song</button>
-        <p className="musicTitle">{songName}</p>
-      </div>
-    );
-  };
-
+  
   // Add a single song from input
   const addSong = () => {
     let song = document.getElementById("musicInp").value.trim();
@@ -59,15 +48,38 @@ function InputLists() {
     console.log(shuffled); // Log the shuffled list
   };
 
+  const [downloadLink, setDownloadLink] = useState(null);
+
+  const createPDF = async (e) => {
+    const frontLabelInfo = {
+      beerName: "Dummy",
+      beerType: "Øl",
+      brewers: "0237",
+      file: "",
+    };
+
+    setDownloadLink(
+      <PDFDownloadLink
+        document={<PDFDocument props={songlist} />}
+        fileName={"labelsheet"}
+      >
+        {({ blob, url, loading, error }) =>
+          loading ? "Loading document..." : "Download now"
+        }
+      </PDFDownloadLink>
+    );
+  };
+
   return (
     <div id="inputContainer">
       <section id="musicContainer">
         {/* Render the songlist */}
-        {songlist.map((song, i) => (
+        {/*songlist.map((song, i) => (
           <DisplaySongList key={"song" + i} songName={song} index={i} />
-        ))}
+        ))*/}
       </section>
       <section id="inputWrapper">
+        {/*
         <div>
           Input Alone <br />
           <input type="text" id="musicInp" />
@@ -83,11 +95,49 @@ function InputLists() {
           <br />
           <br />
         </div>
+        */}
+
         <button onClick={shuffleList}>Scramble Songs</button>
-        <BeerForm />
+        <br />
+        <br />
+        <br />
+
+        <button onClick={createPDF}>Generate PDF</button>
+
+        {downloadLink && downloadLink}
       </section>
     </div>
   );
 }
+/*
+const APIController = (function () {
+  const clientID = "da23bdf5b4334272a1dc8e48abb73409";
+  const clientSecret = "cfc99605c4324f83a2e5759931e707ec";
 
+  //private methods
+  const _getToken = async () => {
+    const result = await fetch("https://accounts.spotify.com/api/token", {
+      method: "POST",
+      headers: {
+        "Content-Type" : "application/x-www-form-urlencoded",
+        "Authorization" : "Basic " + btoa(clientID + ":" + clientSecret)
+      },
+      body:"grant_type=client_credentials"
+    });
+    
+    const data = await result.json();
+    return data.access_token
+  };
+
+  const _getGeneres = async (token) =>{
+    const result = await fetch("https://api.soptify.com/v1/browse/categories?locale=sv_US", {
+      method: "GET",
+      headers: {"Authorization" : "Bearer " + token}
+    });
+
+    const data = await result.json();
+    return data.categproes.items;
+  }
+})();
+*/
 export default InputLists;
